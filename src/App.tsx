@@ -1,7 +1,12 @@
+import { Header } from "./components/header";
+import { RoutesComponent as Routes } from "./components/routes";
+
 export const App = () => {
   return (
     <div className="App">
-      <h1>blog-app</h1>
+      <Header />
+
+      <Routes />
     </div>
   );
 }
