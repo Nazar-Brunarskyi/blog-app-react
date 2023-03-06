@@ -3,10 +3,12 @@ import { RoutesComponent as Routes } from "./components/routes";
 
 export const App = () => {
   return (
-    <div className="App">
-      <Header />
+    <div className="container">
+      <div className="container__fullscreen">
+        <Header />
 
-      <Routes />
+        <Routes />
+      </div>
     </div>
   );
 }
