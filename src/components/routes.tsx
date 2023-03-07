@@ -1,6 +1,7 @@
 import { FC, memo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AuthPage } from './authPage';
+import { AuthComponent } from './AuthComponent';
+import { Blog } from './blog';
 import { NotFound } from './NotFound';
 
 export const RoutesComponent: FC = memo(
@@ -10,7 +11,8 @@ export const RoutesComponent: FC = memo(
         {/* <Route path='*' element={<NotFound />}/> */}
         <Route path='*' element={<Navigate to='/login' replace={true} />} />
 
-        <Route path='/login' element={<AuthPage />} />
+        <Route path='/login' element={<AuthComponent />} />
+        <Route path='/blog' element={<Blog />} />
       </Routes>
     );
   },

@@ -17,7 +17,7 @@ const theme = createTheme();
 
 export const AuthPage = memo(
   () => {
-    const auth = getAuth(app);
+    // const auth = getAuth(app);
     const { user } = useAppSelector(stste => stste.userInfo);
     const dispatch = useAppDispatch();
 
@@ -27,14 +27,6 @@ export const AuthPage = memo(
 
       dispatch(logIn())
     };
-
-    useEffect(() => {
-      auth.onAuthStateChanged(authorizedUser => {
-        if (authorizedUser) {
-          dispatch(setUser(authorizedUser));
-        }
-      })
-    }, []);
 
     return (
       <ThemeProvider theme={theme}>
