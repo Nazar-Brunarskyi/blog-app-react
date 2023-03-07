@@ -15,11 +15,9 @@ export const AuthComponent: FC = memo(
 
     useEffect(() => {
       auth.onAuthStateChanged(authorizedUser => {
-        // if (authorizedUser) {
           dispatch(setUser(authorizedUser));
-        // }
       })
-    }, []);
+    }, [auth, dispatch]);
 
     return (
       <div className='authComponent'>

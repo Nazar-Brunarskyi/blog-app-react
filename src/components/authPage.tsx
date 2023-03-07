@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,16 +8,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { getAuth } from 'firebase/auth';
-import { app } from '../firebase/index'
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { logIn, setUser } from '../redux/state/UserSlice';
+import { logIn } from '../redux/state/UserSlice';
 
 const theme = createTheme();
 
 export const AuthPage = memo(
   () => {
-    // const auth = getAuth(app);
     const { user } = useAppSelector(stste => stste.userInfo);
     const dispatch = useAppDispatch();
 
