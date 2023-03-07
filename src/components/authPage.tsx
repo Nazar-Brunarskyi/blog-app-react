@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,45 +7,34 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { getAuth, signInWithPopup, User } from 'firebase/auth';
-import { app, googleAuthProvider } from '../firebase/index'
+
+import { getAuth } from 'firebase/auth';
+import { app } from '../firebase/index'
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { logIn, setUser } from '../redux/state/UserSlice';
 
 const theme = createTheme();
 
 export const AuthPage = memo(
   () => {
     const auth = getAuth(app);
-    const [user, setUser] = useState<User | null>(auth.currentUser);
+    const { user } = useAppSelector(stste => stste.userInfo);
+    const dispatch = useAppDispatch();
 
-    const logIn = async () => {
-      try {
-        const credentials = await signInWithPopup(auth, googleAuthProvider);
-
-        console.log(credentials);
-
-        setUser(credentials.user)
-      } catch (err) {
-        console.log('arror');
-      }
-    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      logIn();
+      dispatch(logIn())
     };
 
     useEffect(() => {
       auth.onAuthStateChanged(authorizedUser => {
         if (authorizedUser) {
-          setUser(authorizedUser);
+          dispatch(setUser(authorizedUser));
         }
       })
     }, []);
-
-    useEffect(() => {
-      console.log(user);
-    }, [user]);
 
     return (
       <ThemeProvider theme={theme}>
@@ -76,10 +65,6 @@ export const AuthPage = memo(
               Sign in
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
               <Button
                 type="submit"
                 fullWidth

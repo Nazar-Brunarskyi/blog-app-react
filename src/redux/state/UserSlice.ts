@@ -10,15 +10,15 @@ type State = {
 
 const initialState: State = {
   user: null,
-  isLoading: false,
+  isLoading: true,
   isError: '',
 }
 
 export const logIn = createAsyncThunk('login/users', logInWithGoogle)
 
 const userSlice = createSlice({
-  name: 'user',
-  initialState,
+  name: 'userInfo',
+  initialState: initialState as State,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload
@@ -50,4 +50,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { actions } = userSlice;
+export const { setUser } = userSlice.actions;
