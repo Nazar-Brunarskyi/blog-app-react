@@ -21,6 +21,8 @@ export const AuthPage = memo(
       try {
         const credentials = await signInWithPopup(auth, googleAuthProvider);
 
+        console.log(credentials);
+
         setUser(credentials.user)
       } catch (err) {
         console.log('arror');
