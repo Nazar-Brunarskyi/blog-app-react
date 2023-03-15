@@ -1,5 +1,6 @@
 import { Header } from "./components/header";
 import { RoutesComponent as Routes } from "./components/routes";
+import { Toaster } from 'react-hot-toast';
 
 export const App = () => {
   return (
@@ -8,6 +9,8 @@ export const App = () => {
         <Header />
 
         <Routes />
+
+        <Toaster />
       </div>
     </div>
   );

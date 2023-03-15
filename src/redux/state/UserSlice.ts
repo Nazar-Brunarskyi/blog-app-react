@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { User } from 'firebase/auth';
-import { logInWithGoogle } from '../../firebase/login';
+import { logInWithGoogle } from '../../firebase/logInWithGoogle';
 import { logOutFromAccount } from '../../firebase/logout';
 
 type State = {
@@ -11,7 +11,7 @@ type State = {
 
 const initialState: State = {
   user: null,
-  isLoading: true,
+  isLoading: false,
   isError: '',
 }
 
@@ -26,6 +26,10 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload
     },
+
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   },
 
   extraReducers: (bulider) => {
@@ -36,7 +40,7 @@ const userSlice = createSlice({
 
     bulider.addCase(
       logIn.fulfilled,
-      (state, action: PayloadAction<User>) => {
+      (state, action: PayloadAction<User | null>) => {
         state.isLoading = false;
         state.user = action.payload;
       }
@@ -46,16 +50,17 @@ const userSlice = createSlice({
       logIn.rejected,
       (state) => {
         state.isLoading = false;
+        state.user = null;
         state.isError = 'problem with authorization, try it later'
       }
     );
 
     bulider.addCase(
       logOut.fulfilled,
-      (state) => {state.user = null} 
+      (state) => { state.user = null }
     )
   }
 });
 
 export default userSlice.reducer;
-export const { setUser } = userSlice.actions;
+export const { setUser, setLoading } = userSlice.actions;
